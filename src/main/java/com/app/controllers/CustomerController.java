@@ -3,6 +3,7 @@ package com.app.controllers;
 
 import com.app.dao.CountryDao;
 import com.app.dao.CustomerDao;
+import com.app.model.Customer;
 import com.app.model.dto.CustomerDto;
 import com.app.service.CustomerSerivce;
 import org.springframework.stereotype.Controller;
@@ -53,5 +54,24 @@ public class CustomerController {
     {
         customerSerivce.remove(id);
         return "redirect:/customer/select_all";
+    }
+
+    @GetMapping("customer/modify/{id}")
+    public String customerModifyGet(@PathVariable Long id, Model model)
+    {
+        model.addAttribute("country", countryDao.findAll());
+        System.out.println(countryDao.findAll().toString());
+        model.addAttribute("customer", customerDao.findOneById(id));
+        return "customer/modify";
+    }
+
+    @PostMapping("customer/modify")
+    public String customerModifyPost(@ModelAttribute Customer customer, Model model)
+    {
+        customerDao.update(customer);
+        return "redirect:/customer/select_all";
+    }
+    {
+
     }
 }

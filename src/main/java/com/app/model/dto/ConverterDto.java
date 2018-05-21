@@ -47,4 +47,15 @@ public class ConverterDto {
                 fromTradeToTradeDto(producer.getTrade())
         );
     }
+
+    public Producer fromProducerDtotoProducer(ProducerDto producerDto)
+    {
+        return producerDto == null ? null : new Producer(
+                producerDto.getId(),
+                producerDto.getName(),
+                fromCountryDtoToCountry(producerDto.getCountryDto()),
+                fromTradeDtoToTrade(producerDto.getTradeDto()),
+                new HashSet<>()
+        );
+    }
 }

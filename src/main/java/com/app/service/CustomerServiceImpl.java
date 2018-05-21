@@ -10,6 +10,7 @@ import org.modelmapper.PropertyMap;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 
 @Service
@@ -53,5 +54,15 @@ public class CustomerServiceImpl implements CustomerSerivce {
     public void remove(Long id) {
         Customer customer = customerDao.findOneById(id).get();
         customerDao.delete(customer.getId());
+    }
+
+    @Override
+    public Optional<CustomerDto> getById(Long id) {
+        Optional<CustomerDto> optionalCustomerDto = Optional.empty();
+        if(id != null)
+        {
+
+        }
+        return optionalCustomerDto;
     }
 }
