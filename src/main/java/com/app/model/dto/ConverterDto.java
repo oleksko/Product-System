@@ -1,6 +1,7 @@
 package com.app.model.dto;
 
 import com.app.model.Country;
+import com.app.model.Customer;
 import com.app.model.Producer;
 import com.app.model.Trade;
 
@@ -56,6 +57,17 @@ public class ConverterDto {
                 fromCountryDtoToCountry(producerDto.getCountryDto()),
                 fromTradeDtoToTrade(producerDto.getTradeDto()),
                 new HashSet<>()
+        );
+    }
+
+    public Customer fromCustomerDtotoCustomer(CustomerDto customerDto)
+    {
+        return customerDto == null ? null : new Customer(
+                customerDto.getId(),
+                customerDto.getName(),
+                customerDto.getAge(),
+                customerDto.getSurname(),
+                fromCountryDtoToCountry(customerDto.getCountryDto())
         );
     }
 }

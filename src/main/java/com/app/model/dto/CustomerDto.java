@@ -17,5 +17,5 @@ public class CustomerDto {
     private String name;
     private Integer age;
     private String surname;
-    private Long countryId;
+    private CountryDto countryDto;
 }
