@@ -4,6 +4,7 @@ package com.app.controllers;
 import com.app.dao.CountryDao;
 import com.app.dao.CustomerDao;
 import com.app.model.Customer;
+import com.app.model.dto.ConverterDto;
 import com.app.model.dto.CustomerDto;
 import com.app.service.CustomerSerivce;
 import org.springframework.stereotype.Controller;
@@ -20,11 +21,14 @@ public class CustomerController {
     private CustomerSerivce customerSerivce;
     private CountryDao countryDao;
     private CustomerDao customerDao;
+    private ConverterDto converterDto;
 
-    public CustomerController(CustomerSerivce customerSerivce, CountryDao countryDao, CustomerDao customerDao) {
+
+    public CustomerController(CustomerSerivce customerSerivce, CountryDao countryDao, CustomerDao customerDao, ConverterDto converterDto) {
         this.customerSerivce = customerSerivce;
         this.countryDao = countryDao;
         this.customerDao = customerDao;
+        this.converterDto = converterDto;
     }
 
     @PostMapping("/customer/add")
@@ -59,9 +63,21 @@ public class CustomerController {
     @GetMapping("customer/modify/{id}")
     public String customerModifyGet(@PathVariable Long id, Model model)
     {
+        ConverterDto converterDto = new ConverterDto();
         model.addAttribute("country", countryDao.findAll());
         System.out.println(countryDao.findAll().toString());
         model.addAttribute("customer", customerDao.findOneById(id));
+        Customer customer = customerDao.findOneById(id).get();
+
+        CustomerDto customerDto = converterDto.fromCustomertoCustomerDto(customer);
+
+        System.out.println("customer DTO");
+        System.out.println(customerDto.toString());
+
+        System.out.println("customer from dto");
+
+        System.out.println(converterDto.fromCustomerDtotoCustomer(customerDto).toString());
+
         return "customer/modify";
     }
 
@@ -71,7 +87,5 @@ public class CustomerController {
         customerDao.update(customer);
         return "redirect:/customer/select_all";
     }
-    {
 
-    }
 }

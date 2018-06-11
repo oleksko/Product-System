@@ -28,8 +28,7 @@ public class CustomerServiceImpl implements CustomerSerivce {
     public void add(CustomerDto customerDto) {
         if(customerDto != null)
         {
-            System.out.println(customerDto.getCountryId().toString());
-            Country country = countryDao.findOneById(customerDto.getCountryId()).get();
+            Country country = countryDao.findOneById(customerDto.getCountryDto().getId()).get();
             System.out.println(customerDto.getAge());
 
             System.out.println(country.toString());

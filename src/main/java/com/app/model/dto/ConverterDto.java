@@ -4,6 +4,11 @@ import com.app.model.Country;
 import com.app.model.Customer;
 import com.app.model.Producer;
 import com.app.model.Trade;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Bean;
 
 import java.util.HashSet;
 
@@ -64,10 +69,23 @@ public class ConverterDto {
     {
         return customerDto == null ? null : new Customer(
                 customerDto.getId(),
-                customerDto.getName(),
                 customerDto.getAge(),
+                customerDto.getName(),
                 customerDto.getSurname(),
-                fromCountryDtoToCountry(customerDto.getCountryDto())
+                fromCountryDtoToCountry(customerDto.getCountryDto()),
+                new HashSet<>()
+
+        );
+    }
+
+    public CustomerDto fromCustomertoCustomerDto(Customer customer)
+    {
+        return customer == null ? null: new CustomerDto(
+                customer.getId(),
+                customer.getName(),
+                customer.getAge(),
+                customer.getSurname(),
+                fromCountryToCountryDto(customer.getCountry())
         );
     }
 }

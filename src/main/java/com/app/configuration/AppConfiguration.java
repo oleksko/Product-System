@@ -1,5 +1,6 @@
 package com.app.configuration;
 
+import com.app.model.dto.ConverterDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -71,7 +72,7 @@ public class AppConfiguration extends WebMvcConfigurerAdapter implements Applica
     }
 
     @Bean
-    public ModelMapper modelMapper(){
-        return new ModelMapper();
+    public ConverterDto converterDto() {
+        return new ConverterDto();
     }
 }
