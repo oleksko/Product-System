@@ -34,6 +34,9 @@ public class CustomerController {
     @PostMapping("/customer/add")
     public String customerAddPost(@ModelAttribute CustomerDto customer, BindingResult bindingResult, HttpServletRequest request, Model model)
     {
+        System.out.println("customer controller : ");
+        CustomerDto customerDto = customer;
+        System.out.println(customerDto.toString());
         customerSerivce.add(customer);
         return "redirect:/customer/add";
     }
@@ -63,21 +66,8 @@ public class CustomerController {
     @GetMapping("customer/modify/{id}")
     public String customerModifyGet(@PathVariable Long id, Model model)
     {
-        ConverterDto converterDto = new ConverterDto();
-        model.addAttribute("country", countryDao.findAll());
-        System.out.println(countryDao.findAll().toString());
         model.addAttribute("customer", customerDao.findOneById(id));
-        Customer customer = customerDao.findOneById(id).get();
-
-        CustomerDto customerDto = converterDto.fromCustomertoCustomerDto(customer);
-
-        System.out.println("customer DTO");
-        System.out.println(customerDto.toString());
-
-        System.out.println("customer from dto");
-
-        System.out.println(converterDto.fromCustomerDtotoCustomer(customerDto).toString());
-
+        model.addAttribute("country", countryDao.findAll());
         return "customer/modify";
     }
 

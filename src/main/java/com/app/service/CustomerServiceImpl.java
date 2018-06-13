@@ -4,6 +4,7 @@ import com.app.dao.CountryDao;
 import com.app.dao.CustomerDao;
 import com.app.model.Country;
 import com.app.model.Customer;
+import com.app.model.dto.ConverterDto;
 import com.app.model.dto.CustomerDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
@@ -18,17 +19,23 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerSerivce {
     private CustomerDao customerDao;
     private CountryDao countryDao;
+    private ConverterDto converterDto;
 
-    public CustomerServiceImpl(CustomerDao customerDao, CountryDao countryDao) {
+    public CustomerServiceImpl(CustomerDao customerDao, CountryDao countryDao, ConverterDto converterDto) {
         this.customerDao = customerDao;
         this.countryDao = countryDao;
+        this.converterDto = converterDto;
     }
 
     @Override
     public void add(CustomerDto customerDto) {
         if(customerDto != null)
         {
-            Country country = countryDao.findOneById(customerDto.getCountryDto().getId()).get();
+            System.out.println("customer dto");
+            System.out.println(customerDto.toString());
+
+            Country country = converterDto.fromCountryDtoToCountry(customerDto.getCountryDto());
+            System.out.println(country.toString());
             System.out.println(customerDto.getAge());
 
             System.out.println(country.toString());
@@ -60,7 +67,8 @@ public class CustomerServiceImpl implements CustomerSerivce {
         Optional<CustomerDto> optionalCustomerDto = Optional.empty();
         if(id != null)
         {
-
+            Customer customer = customerDao.getById(id);
+            optionalCustomerDto = Optional.of(converterDto.fromCustomertoCustomerDto(customer));
         }
         return optionalCustomerDto;
     }
